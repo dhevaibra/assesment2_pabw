@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ambil Data JSON menggunakan AJAX</title>
+  </head>
+  <body>
+    <h2>Data Handphone</h2>
+
+    <table id="tableData">
+      <thead>
+        <tr>
+          <th>Merk</th>
+          <th>Warna</th>
+          <th>Jumlah</th>
+          <th>Harga</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Data akan dimasukkan di sini -->
+      </tbody>
+    </table>
+
+    <script>
+      // Membuat AJAX request
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          // Parse data JSON yang diterima
+          var data = JSON.parse(this.responseText);
+
+          // Mendapatkan referensi tbody dari tabel
+          var tableBody = document.getElementById("tableBody");
+
+          // Mengisi tabel dengan data JSON
+          data.forEach((handphone) => {
+            var row = tableBody.insertRow();
+            row.innerHTML = `
+        <td>${handphone.merk}</td>
+        <td>${handphone.warna}</td>
+        <td>${handphone.jumlah}</td>
+        <td>${handphone.harga}</td>
+      `;
+          });
+        }
+      };
+      // Mengirim request GET ke server untuk mengambil data JSON
+      xhttp.open("GET", "data_handphone.json", true);
+      xhttp.send();
+    </script>
+  </body>
+</html>
