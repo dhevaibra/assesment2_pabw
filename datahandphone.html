@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ambil Data JSON menggunakan AJAX</title>
+    <title>Mengambil data json</title>
     <style>
       /* CSS untuk menambahkan border ke tabel */
       table {
@@ -31,11 +31,10 @@
           <th>Warna</th>
           <th>Jumlah</th>
           <th>Harga</th>
+          <th>Aksi</th>
         </tr>
       </thead>
-      <tbody id="tableBody">
-        <!-- Data akan dimasukkan di sini -->
-      </tbody>
+      <tbody id="tableBody"></tbody>
     </table>
 
     <script>
@@ -50,20 +49,27 @@
           var tableBody = document.getElementById("tableBody");
 
           // Mengisi tabel dengan data JSON
-          data.forEach((handphone) => {
+          data.forEach((handphone, index) => {
             var row = tableBody.insertRow();
             row.innerHTML = `
         <td>${handphone.merk}</td>
         <td>${handphone.warna}</td>
         <td>${handphone.jumlah}</td>
         <td>${handphone.harga}</td>
+        <td><button onclick="hapusData(${index})">Hapus</button></td>
       `;
           });
         }
       };
-      // Mengirim request GET ke server untuk mengambil data JSON
       xhttp.open("GET", "data_handphone.json", true);
       xhttp.send();
+
+      // Fungsi untuk menghapus data
+      function hapusData(index) {
+        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+          document.getElementById("tableData").deleteRow(index + 1);
+        }
+      }
     </script>
   </body>
 </html>
